@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:18.4
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: english
+      POSTGRES_USER: english
+      POSTGRES_PASSWORD: english
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:8.6
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
